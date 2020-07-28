@@ -1,12 +1,20 @@
 import React from "react";
-import { Paper, TextField, Box } from "@material-ui/core";
-import {useForm} from 'react-hook-form'
+import { Paper, TextField, Box,Button } from "@material-ui/core";
+import { useForm } from "react-hook-form";
+import { connect } from "react-redux";
 
-const Master = () => {
-    const {register,handleSubmit}=useForm()
+const Master = ({ data, dispatch }) => {
+  const { register, handleSubmit } = useForm();
+  const { name, date, number, email } = data;
+
+  const onSubmit = (data) => {
+    console.log(data)
+    dispatch({ type: "UPDATE", payload: data });
+  };
+
   return (
     <Paper>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Box
           display="flex"
           alignItems="center"
@@ -14,15 +22,36 @@ const Master = () => {
           flexDirection="column"
           style={{ width: "27rem", padding: "2rem" }}
         >
-          <TextField 
-          name='name'
-          label="Name" fullWidth />
           <TextField
-          name='name'
-          label="Random Number" fullWidth />
+            defaultValue={name ? name : ""}
+            inputRef={register()}
+            name="name"
+            label="Name"
+            fullWidth
+          />
           <TextField
-          name='name'
-          label="Email" type="email" />
+            inputRef={register()}
+            defaultValue={date ? date : ""}
+            name="date"
+            type="date"
+            style={{margin:"15px 0"}}
+            fullWidth
+          />
+          <TextField
+            inputRef={register()}
+            defaultValue={number ? number : ""}
+            name="number"
+            label="Random Number"
+            fullWidth
+          />
+          <TextField
+            name="email"
+            defaultValue={email ? email : ""}
+            inputRef={register()}
+            label="Email"
+            fullWidth
+            type="email"
+          />
           <Button type="submit" color="secondary">
             Save
           </Button>
@@ -32,4 +61,8 @@ const Master = () => {
   );
 };
 
-export default Master;
+const mapStateToProps = (state) => ({
+  data: state.data,
+});
+
+export default connect(mapStateToProps)(Master);

@@ -94,8 +94,8 @@ const App = ({ history }) => {
         >
           <Switch>
             <Route exact path="/" component={Master} />
-            <Route path="/comp1" component={Comp1} />
-            <Route path="/comp2" component={Comp2} />
+            <Route path="/component1" component={Comp1} />
+            <Route path="/component2" component={Comp2} />
           </Switch>
         </Box>
       </Box>
